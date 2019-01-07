@@ -1,0 +1,123 @@
+@extends('admin_layout')
+@section('admin_content')
+
+<ul class="breadcrumb">
+        <li>
+            <i class="icon-home"></i>
+            <a href="index.html">Home</a>
+            <i class="icon-angle-right"></i> 
+        </li>
+        <li>
+            <i class="icon-edit"></i>
+            <a href="#">Update Products</a>
+        </li>
+    </ul>
+    
+    <div class="row-fluid sortable">
+        <div class="box span12">
+            <div class="box-header" data-original-title>
+                <h2><i class="halflings-icon edit"></i><span class="break"></span>Update Products</h2>
+                	
+                </div>
+            <div class="box-content">
+            <form class="form-horizontal" action="{{ url('/update_product',$data->product_id)}}" method="POST">
+                {{ csrf_field() }}
+                <fieldset>
+                        <div class="control-group">
+                          <label class="control-label">Product Name </label>
+                          <div class="controls">
+                          <input type="text" class="input-xlarge" name="product_name" for="fileInput" value="{{$data->product_name}}" required="" >
+                          </div>
+                        </div>
+                         <div class="control-group">
+                        <label class="control-label" for="selectError3">Product Category </label>
+                            <div class="controls">
+                            <select id="selectError3" name="category_id">
+                            <option value="">Select Option</option>
+                        @php
+                            $all_publishhed_category = DB::table('tbl_category')
+                                                            ->where('publications_status',1)
+                                                            ->get();								   
+                        @endphp
+                        @foreach ($all_publishhed_category as $item)
+                            <option value="{{$item->category_id}}">{{($item->category_name)}}</option>
+                        @endforeach	
+                            </select>
+                            </div>
+                              </div> 
+                            <div class="control-group">
+                            <label class="control-label" for="selectError3">Manafacture Name </label>
+                            <div class="controls">
+                            <select id="selectError3" name="manufacture_id">
+                                    <option value="">Select Option</option>
+                                    @php
+                                        $all_publishhed_category = DB::table('tbl_manufacture')
+                                                                        ->where('publications_status',1)
+                                                                        ->get();								   
+                                    @endphp
+                                    @foreach ($all_publishhed_category as $item)
+                                        <option value="{{$item->manufacture_id}}">{{($item->manufacture_name)}}</option>
+                                    @endforeach	
+                            </select>
+                                </div>
+                                    </div> 
+                        <div class="control-group">
+                        <label class="control-label" for="fileInput">Product short description</label>
+                        <div class="controls">
+                        <textarea class="cleditor" name="product_short_description" id="textarea2" rows="3">
+                                {{$data->product_short_description}} 
+                        </textarea>
+                        </div>
+                        </div>
+                        <div class="control-group">
+                        <label class="control-label" for="fileInput">Product Long description</label>
+                        <div class="controls">
+                        <textarea class="cleditor" name="product_long_description"  id="textarea2" rows="3">
+                                {{$data->product_long_description}}
+                        </textarea>
+                        </div>
+                        </div>     
+                        <div class="control-group">
+                        <label class="control-label">Product Price </label>
+                        <div class="controls">
+                        <input type="text" class="input-xlarge" name="product_price" for="fileInput" value="{{$data->product_price}}" required="" >
+                        </div>
+                        </div> 
+                        <div class="control-group">
+                        <label class="control-label">Image input</label>
+                        <div class="controls">
+                        <input type="file" class="input-file uniform_on" name="product_image" for="fileInput"  >
+                        </div>
+                        </div>  
+                        <div class="control-group">
+                        <label class="control-label">Product Size </label>
+                        <div class="controls">
+                        <input type="text" class="input-xlarge" name="product_size" for="fileInput" value="{{$data->product_size}}"  required="" >
+                        </div>
+                        </div> 
+                        <div class="control-group">
+                        <label class="control-label">Product Color </label>
+                        <div class="controls">
+                        <input type="text" class="input-xlarge" name="product_color" for="fileInput" value="{{$data->product_color}}"  required="" >
+                        </div>
+                        </div> 
+                        <div class="control-group">
+                        <label class="control-label"  for="fileInput">Publications Status</label>
+                        <div class="controls">
+                        <input type="checkbox" name="publications_status" value="{{$data->publications_status}}" value="1">
+                        </div>
+                        </div>         
+                        <div class="form-actions">
+                          <button type="submit" class="btn btn-success">Update Product</button>
+                          <button type="reset" class="btn">Cancel</button>
+                        </div>
+                      </fieldset>
+                </form>   
+
+            </div>
+        </div><!--/span-->
+
+    </div><!--/row-->
+
+    
+@endsection
